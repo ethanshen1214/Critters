@@ -116,6 +116,79 @@ public abstract class Critter {
     public static void createCritter(String critter_class_name)
             throws InvalidCritterException {
         // TODO: Complete this method
+        if(critter_class_name.length() < 12) {
+    		critter_class_name = myPackage + "." + critter_class_name;
+    	}
+    	//System.out.println(critter_class_name);
+    	Object mycritter = null;
+    	try
+    	{
+    		Class c = Class.forName(critter_class_name);
+    		Critter crit = (Critter)c.newInstance();
+    		mycritter = crit;
+    		
+    	}
+    	catch(ClassNotFoundException e)
+    	{
+    		e.printStackTrace();
+    		throw new InvalidCritterException(critter_class_name);
+    	} 
+    	catch (InstantiationException e) {
+			e.printStackTrace();
+		} 
+    	catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+    	Critter me = (Critter) mycritter;		// Cast to Critter
+    	me.x_coord = Critter.getRandomInt(Params.WORLD_WIDTH);
+    	me.y_coord = Critter.getRandomInt(Params.WORLD_HEIGHT);
+    	me.energy = Params.START_ENERGY;
+    	
+    	if(critter_class_name.equals("assignment4.Clover"))
+    	{
+    		Clover clover = (Clover) me;
+    		population.add(clover);
+    	}
+    	else if(critter_class_name.equals("assignment4.MyCritter1"))
+    	{
+    		MyCritter1 c = (MyCritter1) me;
+       		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment4.MyCritter2"))
+    	{
+    		MyCritter2 c = (MyCritter2) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment4.MyCritter3"))
+    	{
+    		MyCritter3 c = (MyCritter3) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment4.MyCritter4"))
+    	{
+    		MyCritter4 c = (MyCritter4) me;
+    		population.add(c);
+    	}
+       	else if(critter_class_name.equals("assignment4.MyCritter5"))
+    	{
+    		MyCritter5 c = (MyCritter5) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment4.MyCritter6"))
+    	{
+    		MyCritter6 c = (MyCritter6) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment4.MyCritter7"))
+    	{
+    		MyCritter7 c =  (MyCritter7) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment4.Goblin"))
+    	{
+    		Goblin c = (Goblin) me;
+    		population.add(c);
+    	}
     }
 
     /**
@@ -129,7 +202,27 @@ public abstract class Critter {
     public static List<Critter> getInstances(String critter_class_name)
             throws InvalidCritterException {
         // TODO: Complete this method
-        return null;
+        List<Critter> list = new ArrayList<Critter>();
+    	if(critter_class_name.length() < 12) {
+    		critter_class_name = myPackage + "." + critter_class_name;
+    	}
+		try
+		{
+			Class temp = Class.forName(critter_class_name);
+			for(Critter c : population)
+			{
+				if(c.getClass().equals(temp))
+				{
+					list.add(c);
+				}
+			}
+		}
+		catch(ClassNotFoundException e)
+		{
+			throw new InvalidCritterException(critter_class_name);
+		}
+
+        return list;
     }
 
     /**
@@ -137,11 +230,115 @@ public abstract class Critter {
      */
     public static void clearWorld() {
         // TODO: Complete this method
+        population.clear();
     }
 
     public static void worldTimeStep() {
         // TODO: Complete this method
+        for(Critter c : population)
+    	{
+    		c.doTimeStep();
+    	}
+    	
+    	for(int i = 0; i < population.size(); i++) {
+    		Critter c = population.get(i);
+    		if(c.energy < 1) {
+    			population.remove(c);
+    		}
+    	}
+    	for(int i = 0; i < population.size()-1; i++)
+    	{
+    		for(int j = i+1; j < population.size(); j++) 
+    		{
+    			if(population.get(i).x_coord == population.get(j).x_coord && population.get(i).y_coord == population.get(j).y_coord)
+    			{
+    				//System.out.println(population.get(i).energy);
+    				//System.out.println(population.get(j).energy);
+    				doEncounters(population.get(i), population.get(j));
+    			}
+    		}
+    	}
+    	for(int i = 0; i < population.size(); i++) {
+    		Critter c = population.get(i);
+    		c.energy = c.energy - Params.REST_ENERGY_COST;
+    		if(c.energy <= 0) {
+    			population.remove(c);
+    		}
+    	}
+    	for(int i = 0; i < Params.REFRESH_CLOVER_COUNT; i++) {
+    		try {
+				createCritter("Clover");
+			} catch (InvalidCritterException e) {
+				e.printStackTrace();
+			}
+    	}
+    	
+    	for(Critter b: babies) {
+    		population.add(b);
+    	}
+    	babies.clear();
+    	//resolve encounters if two critters occupy the same space
     }
+
+     /**
+     * resolves encounters based on critter data
+     * @param a one of the two critters in the encounters
+     * @param b one of the two critters in the encounters
+     */
+    public static void doEncounters(Critter a, Critter b) {
+    	boolean aFight = a.fight(b.toString());
+    	boolean bFight = b.fight(a.toString());
+    	int aRoll = 0;
+    	int bRoll = 0;
+    	
+
+    	if(a.x_coord == b.x_coord && a.y_coord == b.y_coord)
+    	{
+	    	if(aFight) {
+	        	if(a.getEnergy()<=0) {
+	        		//System.out.println(a.getEnergy() + "is 0");
+	        		aRoll = 0;
+	        	}
+	        	else {
+	        		//System.out.println(a.getEnergy());
+	        		aRoll = Critter.getRandomInt(a.getEnergy());	
+	        	}
+	        }
+	    	else
+	    		aRoll = 0;
+	    	
+	    	if(bFight) { 
+	        	if(b.getEnergy()<=0) {
+	        		//System.out.println(b.getEnergy() + "is 0");
+	        		bRoll = 0;
+	        	}
+	        	else {
+	        		//System.out.println(b.getEnergy());
+	    		bRoll = Critter.getRandomInt(b.getEnergy());
+	        	}
+	        }
+	    	else
+	    		bRoll = 0;
+	    	
+	    	if(aRoll >= bRoll)
+	    	{
+	    		//a wins
+	    		a.energy += b.getEnergy()/2;
+	    		//world.removeCritter(b);
+	    		population.remove(b);
+	    	}
+	    	else
+	    	{
+	    		//b wins
+	    		b.energy += a.getEnergy()/2;
+	    		//world.removeCritter(a);
+	    		population.remove(a);
+	    	}
+    	}
+    	
+    }
+
+    
 
     public abstract void doTimeStep();
 
@@ -159,15 +356,151 @@ public abstract class Critter {
 
     protected final void walk(int direction) {
         // TODO: Complete this method
+        this.energy -= Params.WALK_ENERGY_COST;
+    	if(direction == 0)			//right
+    	{
+    		this.x_coord = (this.x_coord + 1)%(Params.WORLD_WIDTH);
+    	}    	
+    	else if(direction == 1)		//up right
+    	{
+    		this.x_coord = (this.x_coord + 1)%(Params.WORLD_WIDTH);
+    		if(this.y_coord == 0)
+    			this.y_coord = Params.WORLD_HEIGHT-1;
+    		else
+    			this.y_coord--;
+    	}    	
+    	else if(direction == 2)		//up
+    	{
+    		if(this.y_coord == 0)
+    			this.y_coord = Params.WORLD_HEIGHT-1;
+    		else
+    			this.y_coord--;
+    	}
+    	else if(direction == 3)		//up left
+    	{
+    		if(this.x_coord == 0)
+    			this.x_coord = Params.WORLD_WIDTH-1;
+    		else
+    			this.x_coord--;
+    		if(this.y_coord == 0)
+    			this.y_coord = Params.WORLD_HEIGHT-1;
+    		else
+    			this.y_coord--;
+    	}
+    	else if(direction == 4)		//left
+    	{
+    		if(this.x_coord == 0)
+    			this.x_coord = Params.WORLD_WIDTH-1;
+    		else
+    			this.x_coord--;
+    	}
+    	else if(direction == 5)		//down left
+    	{
+    		if(this.x_coord == 0)
+    			this.x_coord = Params.WORLD_WIDTH-1;
+    		else
+    			this.x_coord--;
+    		this.y_coord = (this.y_coord + 1)%(Params.WORLD_HEIGHT);
+    	}
+    	else if(direction == 6)		//down
+    	{
+    		this.y_coord = (this.y_coord + 1)%(Params.WORLD_HEIGHT);
+    	}
+    	else if(direction == 7)		//down right
+    	{
+    		this.x_coord = (this.x_coord + 1)%(Params.WORLD_WIDTH);
+    		this.y_coord = (this.y_coord + 1)%(Params.WORLD_HEIGHT);
+    	}
     }
 
     protected final void run(int direction) {
         // TODO: Complete this method
-
+        this.energy -= Params.RUN_ENERGY_COST;
+    	if(direction == 0 || direction == 7)			//right
+    	{
+    		this.x_coord = (this.x_coord + 2)%(Params.WORLD_WIDTH);
+    	}    	
+    	else if(direction == 11)		//up right
+    	{
+    		this.x_coord = (this.x_coord + 2)%(Params.WORLD_WIDTH);
+    		if(this.y_coord == 0)
+    			this.y_coord = Params.WORLD_HEIGHT-2;
+    		else if(this.y_coord == 1)
+    			this.y_coord = Params.WORLD_HEIGHT-1;
+    		else
+    			this.y_coord -= 2;
+    	}    	
+    	else if(direction == 1 || direction == 2)		//up
+    	{
+    		if(this.y_coord == 0)
+    			this.y_coord = Params.WORLD_HEIGHT-2;
+    		else if(this.y_coord == 1)
+    			this.y_coord = Params.WORLD_HEIGHT-1;
+    		else
+    			this.y_coord -= 2;
+    	}
+    	else if(direction == 10)		//up left
+    	{
+    		if(this.x_coord == 0)
+    			this.x_coord = Params.WORLD_WIDTH-2;
+    		else if(this.x_coord == 1)
+    			this.x_coord = Params.WORLD_WIDTH-1;
+    		else
+    			this.x_coord--;
+    		
+    		if(this.y_coord == 0)
+    			this.y_coord = Params.WORLD_HEIGHT-2;
+    		else if(this.y_coord == 1)
+    			this.y_coord = Params.WORLD_HEIGHT-1;
+    		else
+    			this.y_coord -= 2;
+    	}
+    	else if(direction == 4 || direction == 3)		//left
+    	{
+    		if(this.x_coord == 0)
+    			this.x_coord = Params.WORLD_WIDTH-2;
+    		else if(this.x_coord == 1)
+    			this.x_coord = Params.WORLD_WIDTH-1;
+    		else
+    			this.x_coord-= 2;
+    	}
+    	else if(direction == 9)		//down left
+    	{
+    		if(this.x_coord == 0)
+    			this.x_coord = Params.WORLD_WIDTH-2;
+    		else if(this.x_coord == 1)
+    			this.x_coord = Params.WORLD_WIDTH-1;
+    		else
+    			this.x_coord--;
+    		
+    		this.y_coord = (this.y_coord + 2)%(Params.WORLD_HEIGHT);
+    	}
+    	else if(direction == 5 || direction == 6)		//down
+    	{
+    		this.y_coord = (this.y_coord + 2)%(Params.WORLD_HEIGHT);
+    	}
+    	else if(direction == 8)		//down right
+    	{
+    		this.x_coord = (this.x_coord + 2)%(Params.WORLD_WIDTH);
+    		this.y_coord = (this.y_coord + 2)%(Params.WORLD_HEIGHT);
+    	}
     }
 
     protected final void reproduce(Critter offspring, int direction) {
         // TODO: Complete this method
+        if(this.energy < Params.MIN_REPRODUCE_ENERGY) {
+    		return;
+    	}
+    	else {
+    		babies.add(offspring);
+    		offspring.energy = Math.floorDiv(this.energy, 2);
+    		double en = (double)this.energy;
+    		en = en/2;
+    		this.energy = (int)Math.ceil(en); 
+    	}
+    	offspring.x_coord = this.x_coord;
+    	offspring.y_coord = this.y_coord;
+    	offspring.walk(direction);
     }
 
     /**
