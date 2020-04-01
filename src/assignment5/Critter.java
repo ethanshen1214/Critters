@@ -1,12 +1,12 @@
 /* CRITTERS Critter.java
  * EE422C Project 5 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * Ethan Shen
+ * es38348
+ * 16295
+ * Osama Iqbal
+ * oi723
+ * 16295
  * Slip days used: <0>
  * Spring 2020
  */
@@ -62,6 +62,39 @@ public abstract class Critter {
     public abstract CritterShape viewShape();
 
     protected final String look(int direction, boolean steps) {
+		this.energy -= Params.WALK_ENERGY_COST;
+    	if(direction == 0)			//right
+    	{
+
+    	}    	
+    	else if(direction == 1)		//up right
+    	{
+
+    	}    	
+    	else if(direction == 2)		//up
+    	{
+
+    	}
+    	else if(direction == 3)		//up left
+    	{
+
+    	}
+    	else if(direction == 4)		//left
+    	{
+
+    	}
+    	else if(direction == 5)		//down left
+    	{
+
+    	}
+    	else if(direction == 6)		//down
+    	{
+    		
+    	}
+    	else if(direction == 7)		//down right
+    	{
+
+    	}
         return "";
     }
 
