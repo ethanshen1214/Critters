@@ -40,6 +40,6 @@ public class MyCritter2 extends TestCritter{
     @Override
     public CritterShape viewShape() {
         // TODO Auto-generated method stub
-        return null;
+        return CritterShape.SQUARE;
     }
 }

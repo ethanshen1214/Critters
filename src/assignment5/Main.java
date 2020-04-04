@@ -1,6 +1,5 @@
 package assignment5;
 
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
@@ -25,6 +26,9 @@ public class Main extends Application{
     @Override
     public void start(Stage primaryStage) {
         GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(10,10,10,10));
 
         
 
@@ -145,7 +149,11 @@ public class Main extends Application{
                 numSteps += " time steps completed. ";
                 numStepsLabel.setText(numSteps);
                 //actually do a time step
-                int steps = Integer.parseInt(numStepsField.getText());
+                int steps;
+                if(numStepsField.getText().equals(""))
+                    steps = 1;
+                else
+                    steps = Integer.parseInt(numStepsField.getText());
                 for(int i = 0; i < steps; i++)
                 {
                     Critter.worldTimeStep();
@@ -159,7 +167,17 @@ public class Main extends Application{
         Stage secondStage = new Stage();
         GridPane world = new GridPane();
         //world.setPrefSize(750, 750);
-        world.setGridLinesVisible(true);
+        world.setMaxSize(Params.WORLD_WIDTH, Params.WORLD_HEIGHT);
+        for(int i = 0; i < world.getMaxWidth() - 1; i ++)
+        {
+            for(int j = 0; j < world.getMaxHeight() - 1; j++)
+            {
+                Rectangle rectangle = new Rectangle(30,30, Color.WHITE);
+				world.add(rectangle, i,j);
+            }
+        }
+        
+        world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
 
 
         Button displayWorldButton = new Button();                    //button
@@ -176,7 +194,7 @@ public class Main extends Application{
         });
 
 
-        Scene scene = new Scene(grid, 500, 300);
+        Scene scene = new Scene(grid, 550, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
 

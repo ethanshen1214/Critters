@@ -17,7 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.lang.model.util.ElementScanner6;
+
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.TriangleMesh;
 
 /*
  * See the PDF for descriptions of the methods and fields in this
@@ -29,95 +35,109 @@ import javafx.scene.layout.GridPane;
 
 public abstract class Critter {
 
-    /* START --- NEW FOR PROJECT 5 */
-    public enum CritterShape {
-        CIRCLE,
-        SQUARE,
-        TRIANGLE,
-        DIAMOND,
-        STAR
-    }
+	/* START --- NEW FOR PROJECT 5 */
+	public enum CritterShape {
+		CIRCLE, SQUARE, TRIANGLE, DIAMOND, STAR
+	}
 
-    /* the default color is white, which I hope makes critters invisible by default
-     * If you change the background color of your View component, then update the default
-     * color to be the same as you background
-     *
-     * critters must override at least one of the following three methods, it is not
-     * proper for critters to remain invisible in the view
-     *
-     * If a critter only overrides the outline color, then it will look like a non-filled
-     * shape, at least, that's the intent. You can edit these default methods however you
-     * need to, but please preserve that intent as you implement them.
-     */
-    public javafx.scene.paint.Color viewColor() {
-        return javafx.scene.paint.Color.WHITE;
-    }
+	/*
+	 * the default color is white, which I hope makes critters invisible by default
+	 * If you change the background color of your View component, then update the
+	 * default color to be the same as you background
+	 *
+	 * critters must override at least one of the following three methods, it is not
+	 * proper for critters to remain invisible in the view
+	 *
+	 * If a critter only overrides the outline color, then it will look like a
+	 * non-filled shape, at least, that's the intent. You can edit these default
+	 * methods however you need to, but please preserve that intent as you implement
+	 * them.
+	 */
+	public javafx.scene.paint.Color viewColor() {
+		return javafx.scene.paint.Color.WHITE;
+	}
 
-    public javafx.scene.paint.Color viewOutlineColor() {
-        return viewColor();
-    }
+	public javafx.scene.paint.Color viewOutlineColor() {
+		return viewColor();
+	}
 
-    public javafx.scene.paint.Color viewFillColor() {
-        return viewColor();
-    }
+	public javafx.scene.paint.Color viewFillColor() {
+		return viewColor();
+	}
 
-    public abstract CritterShape viewShape();
+	public abstract CritterShape viewShape();
 
-    protected final String look(int direction, boolean steps) {
+	protected final String look(int direction, boolean steps) {
 		this.energy -= Params.WALK_ENERGY_COST;
 		int numSteps = 0;
-		if(steps)
+		if (steps)
 			numSteps = 2;
 		else
 			numSteps = 1;
-    	if(direction == 0)			//right
-    	{
+		if (direction == 0) // right
+		{
 
-    	}    	
-    	else if(direction == 1)		//up right
-    	{
+		} else if (direction == 1) // up right
+		{
 
-    	}    	
-    	else if(direction == 2)		//up
-    	{
+		} else if (direction == 2) // up
+		{
 
-    	}
-    	else if(direction == 3)		//up left
-    	{
+		} else if (direction == 3) // up left
+		{
 
-    	}
-    	else if(direction == 4)		//left
-    	{
+		} else if (direction == 4) // left
+		{
 
-    	}
-    	else if(direction == 5)		//down left
-    	{
+		} else if (direction == 5) // down left
+		{
 
-    	}
-    	else if(direction == 6)		//down
-    	{
-    		
-    	}
-    	else if(direction == 7)		//down right
-    	{
+		} else if (direction == 6) // down
+		{
 
-    	}
-        return "";
-    }
+		} else if (direction == 7) // down right
+		{
 
-    public static String runStats(List<Critter> critters) {
-        // TODO Implement this method
-        return null;
-    }
+		}
+		return "";
+	}
 
-
-    public static void displayWorld(Object pane) {
+	public static String runStats(List<Critter> critters) {
 		// TODO Implement this method
+		return null;
+	}
+
+	public static void displayWorld(Object pane) {
+		// TODO Implement this method
+		GridPane world = (GridPane)pane;
 
 		for(Critter c : population)
 		{
-			
+
+			if(c.viewShape() == CritterShape.CIRCLE)
+			{
+				Circle circle = new Circle(15, Color.RED);
+				world.add(circle, c.x_coord,c.y_coord);
+			}
+			else if(c.viewShape() == CritterShape.SQUARE)
+			{
+				Rectangle rectangle = new Rectangle(30,30, Color.LIGHTGRAY);
+				world.add(rectangle, c.x_coord, c.y_coord);
+			}
+			else if(c.viewShape() == CritterShape.TRIANGLE)
+			{
+				
+			}
+			else if(c.viewShape() == CritterShape.DIAMOND)
+			{
+				
+			}
+			else if(c.viewShape() == CritterShape.STAR)
+			{
+				
+			}
 		}
+		//world.setGridLinesVisible(true);
     }
 
 	/* END --- NEW FOR PROJECT 5
@@ -314,19 +334,19 @@ public abstract class Critter {
     			population.remove(c);
     		}
     	}
-    	for(int i = 0; i < Params.REFRESH_CLOVER_COUNT; i++) {
-    		try {
-				createCritter("Clover");
-			} catch (InvalidCritterException e) {
-				e.printStackTrace();
-			}
-    	}
+    	// for(int i = 0; i < Params.REFRESH_CLOVER_COUNT; i++) {
+    	// 	try {
+		// 		createCritter("Clover");
+		// 	} catch (InvalidCritterException e) {
+		// 		e.printStackTrace();
+		// 	}
+    	// }
     	
     	for(Critter b: babies) {
     		population.add(b);
     	}
     	babies.clear();
-    	//resolve encounters if two critters occupy the same space
+		//resolve encounters if two critters occupy the same space
     }
 
      /**
