@@ -32,7 +32,8 @@ public class Main extends Application{
         title.setFont(new Font("Arial", 24));
         grid.add(title, 0,0);
 
-/********************************************************************************/        
+/****************************************************************************************************************/ 
+/**Set Seed */       
 
         Label seed = new Label("Set Seed (Integer): ");         //instruction label
         grid.add(seed, 0, 1);
@@ -59,7 +60,8 @@ public class Main extends Application{
                 Critter.setSeed(seed);
             }
         });
-/********************************************************************************/
+/*******************************************************************************************************************/
+/**Create Critters  */
 
         Label critterType = new Label("Critter Name (e.g. Clover): ");         //instruction label
         grid.add(critterType, 0, 4);
@@ -119,7 +121,8 @@ public class Main extends Application{
                 //System.out.println(Critter.getPop());
             }
         });
-/********************************************************************************/
+/*************************************************************************************************************/
+/**Time Step */
 
         Label numSteps = new Label("Number of Steps (default 1): ");         //instruction label
         grid.add(numSteps, 0, 7);
@@ -150,7 +153,8 @@ public class Main extends Application{
             }
         });
 
-/********************************************************************************/
+/**********************************************************************************************************/
+/**Display World */
 
         Button displayWorldButton = new Button();                    //button
         displayWorldButton.setText("Display World");
@@ -160,7 +164,7 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
-                //Critter.displayWorld(world);
+                //call Critter.displayWorld(); with a pane object
             }
         });
 
