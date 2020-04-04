@@ -103,6 +103,31 @@ public class Main extends Application{
         });
 /********************************************************************************/
 
+        Label numSteps = new Label("Number of Steps (default 1): ");         //instruction label
+        grid.add(numSteps, 0, 7);
+        Label numStepsLabel = new Label();   //output label
+        grid.add(numStepsLabel, 1,8);
+
+        TextField numStepsField = new TextField();               //input text
+        grid.add(numStepsField, 1,7);
+
+        Button numStepsButton = new Button();                    //button
+        numStepsButton.setText("Time Step");
+        grid.add(numStepsButton, 4, 7);
+
+        numStepsButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                String numSteps = "";
+                numSteps += numStepsField.getText();
+                numSteps += " time steps completed. ";
+                numStepsLabel.setText(numSteps);
+                //actually do a time step
+            }
+        });
+
+
 
         Scene scene = new Scene(grid, 500, 700);
         primaryStage.setScene(scene);
