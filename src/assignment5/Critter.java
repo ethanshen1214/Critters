@@ -182,41 +182,41 @@ public abstract class Critter {
     		Clover clover = (Clover) me;
     		population.add(clover);
     	}
-    	else if(critter_class_name.equals("assignment4.MyCritter1"))
-    	{
-    		MyCritter1 c = (MyCritter1) me;
-       		population.add(c);
-    	}
-    	else if(critter_class_name.equals("assignment4.MyCritter2"))
-    	{
-    		MyCritter2 c = (MyCritter2) me;
-    		population.add(c);
-    	}
-    	else if(critter_class_name.equals("assignment4.MyCritter3"))
-    	{
-    		MyCritter3 c = (MyCritter3) me;
-    		population.add(c);
-    	}
-    	else if(critter_class_name.equals("assignment4.MyCritter4"))
-    	{
-    		MyCritter4 c = (MyCritter4) me;
-    		population.add(c);
-    	}
-       	else if(critter_class_name.equals("assignment4.MyCritter5"))
-    	{
-    		MyCritter5 c = (MyCritter5) me;
-    		population.add(c);
-    	}
-    	else if(critter_class_name.equals("assignment4.MyCritter6"))
-    	{
-    		MyCritter6 c = (MyCritter6) me;
-    		population.add(c);
-    	}
-    	else if(critter_class_name.equals("assignment4.MyCritter7"))
-    	{
-    		MyCritter7 c =  (MyCritter7) me;
-    		population.add(c);
-    	}
+    	// else if(critter_class_name.equals("assignment4.MyCritter1"))
+    	// {
+    	// 	MyCritter1 c = (MyCritter1) me;
+       	// 	population.add(c);
+    	// }
+    	// else if(critter_class_name.equals("assignment4.MyCritter2"))
+    	// {
+    	// 	MyCritter2 c = (MyCritter2) me;
+    	// 	population.add(c);
+    	// }
+    	// else if(critter_class_name.equals("assignment4.MyCritter3"))
+    	// {
+    	// 	MyCritter3 c = (MyCritter3) me;
+    	// 	population.add(c);
+    	// }
+    	// else if(critter_class_name.equals("assignment4.MyCritter4"))
+    	// {
+    	// 	MyCritter4 c = (MyCritter4) me;
+    	// 	population.add(c);
+    	// }
+       	// else if(critter_class_name.equals("assignment4.MyCritter5"))
+    	// {
+    	// 	MyCritter5 c = (MyCritter5) me;
+    	// 	population.add(c);
+    	// }
+    	// else if(critter_class_name.equals("assignment4.MyCritter6"))
+    	// {
+    	// 	MyCritter6 c = (MyCritter6) me;
+    	// 	population.add(c);
+    	// }
+    	// else if(critter_class_name.equals("assignment4.MyCritter7"))
+    	// {
+    	// 	MyCritter7 c =  (MyCritter7) me;
+    	// 	population.add(c);
+    	// }
     	else if(critter_class_name.equals("assignment4.Goblin"))
     	{
     		Goblin c = (Goblin) me;
