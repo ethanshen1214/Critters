@@ -156,6 +156,12 @@ public class Main extends Application{
 /**********************************************************************************************************/
 /**Display World */
 
+        Stage secondStage = new Stage();
+        GridPane world = new GridPane();
+        //world.setPrefSize(750, 750);
+        world.setGridLinesVisible(true);
+
+
         Button displayWorldButton = new Button();                    //button
         displayWorldButton.setText("Display World");
         grid.add(displayWorldButton, 0, 10);
@@ -165,6 +171,7 @@ public class Main extends Application{
             public void handle(ActionEvent event)
             {
                 //call Critter.displayWorld(); with a pane object
+                Critter.displayWorld(world);
             }
         });
 
@@ -173,16 +180,19 @@ public class Main extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
 
-
-/************************************************************************************** */
-/************************************************************************************** */
-/************************************************************************************** */
-
-        Stage secondStage = new Stage();
-        GridPane world = new GridPane();
-
-
-        Scene scene2 = new Scene(world, 500, 200);
+        Scene scene2 = new Scene(world, 600, 600);
+        secondStage.setScene(scene2);
         secondStage.show();
+
+
+/************************************************************************************** */
+/************************************************************************************** */
+/************************************************************************************** */
+
+
+
+
+
+
     }
 }

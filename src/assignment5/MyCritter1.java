@@ -30,6 +30,7 @@ public class MyCritter1 extends TestCritter {
     @Override
     public CritterShape viewShape() {
         // TODO Auto-generated method stub
-        return null;
+        return CritterShape.CIRCLE;
     }
+
 }

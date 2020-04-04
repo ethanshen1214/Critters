@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javafx.scene.layout.GridPane;
+
 /*
  * See the PDF for descriptions of the methods and fields in this
  * class.
@@ -63,6 +65,11 @@ public abstract class Critter {
 
     protected final String look(int direction, boolean steps) {
 		this.energy -= Params.WALK_ENERGY_COST;
+		int numSteps = 0;
+		if(steps)
+			numSteps = 2;
+		else
+			numSteps = 1;
     	if(direction == 0)			//right
     	{
 
@@ -105,7 +112,12 @@ public abstract class Critter {
 
 
     public static void displayWorld(Object pane) {
-        // TODO Implement this method
+		// TODO Implement this method
+
+		for(Critter c : population)
+		{
+			
+		}
     }
 
 	/* END --- NEW FOR PROJECT 5
