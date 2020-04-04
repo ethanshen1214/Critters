@@ -116,12 +116,12 @@ public abstract class Critter {
 
 			if(c.viewShape() == CritterShape.CIRCLE)
 			{
-				Circle circle = new Circle(15, Color.RED);
+				Circle circle = new Circle(5, Color.RED);
 				world.add(circle, c.x_coord,c.y_coord);
 			}
 			else if(c.viewShape() == CritterShape.SQUARE)
 			{
-				Rectangle rectangle = new Rectangle(30,30, Color.LIGHTGRAY);
+				Rectangle rectangle = new Rectangle(10,10, Color.LIGHTGRAY);
 				world.add(rectangle, c.x_coord, c.y_coord);
 			}
 			else if(c.viewShape() == CritterShape.TRIANGLE)

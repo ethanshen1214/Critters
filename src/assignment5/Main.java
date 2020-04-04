@@ -36,6 +36,14 @@ public class Main extends Application{
         title.setFont(new Font("Arial", 24));
         grid.add(title, 0,0);
 
+        Stage secondStage = new Stage();                        //second stage for the critter grid
+        GridPane world = new GridPane();
+        //world.setPrefSize(750, 750);
+        world.setMaxSize(Params.WORLD_WIDTH, Params.WORLD_HEIGHT);
+        clearWorld(world);
+        //world.setGridLinesVisible(true);
+        //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
+
 /****************************************************************************************************************/ 
 /**Set Seed */       
 
@@ -158,26 +166,38 @@ public class Main extends Application{
                 {
                     Critter.worldTimeStep();
                 }
+
+                // for(int a = 0; a < world.getMaxWidth(); a ++)//clears the grid
+                // {
+                //     for(int b = 0; b < world.getMaxHeight(); b++)
+                //     {
+                //         Rectangle rectangle = new Rectangle(30,30, Color.WHITE);
+                //         world.add(rectangle, a,b);
+                //     }
+                // }
+                clearWorld(world);
+                Critter.displayWorld(world);
+            }
+        });
+
+/**********************************************************************************************************/
+/**Quit button */
+
+        Button quitButton = new Button();                    //button
+        quitButton.setText("Quit");
+        grid.add(quitButton, 1, 10);
+
+        quitButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                System.exit(0);
             }
         });
 
 /**********************************************************************************************************/
 /**Display World */
 
-        Stage secondStage = new Stage();
-        GridPane world = new GridPane();
-        //world.setPrefSize(750, 750);
-        world.setMaxSize(Params.WORLD_WIDTH, Params.WORLD_HEIGHT);
-        for(int i = 0; i < world.getMaxWidth() - 1; i ++)
-        {
-            for(int j = 0; j < world.getMaxHeight() - 1; j++)
-            {
-                Rectangle rectangle = new Rectangle(30,30, Color.WHITE);
-				world.add(rectangle, i,j);
-            }
-        }
-        
-        world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
 
 
         Button displayWorldButton = new Button();                    //button
@@ -188,7 +208,9 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
+                //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
                 //call Critter.displayWorld(); with a pane object
+                clearWorld(world);
                 Critter.displayWorld(world);
             }
         });
@@ -212,5 +234,18 @@ public class Main extends Application{
 
 
 
+    }
+
+    public void clearWorld(GridPane world)
+    {
+        for(int i = 0; i < world.getMaxWidth(); i ++)
+        {
+            for(int j = 0; j < world.getMaxHeight(); j++)
+            {
+                Rectangle rectangle = new Rectangle(30,30, Color.WHITE);
+				world.add(rectangle, i,j);
+            }
+        }
+        world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
     }
 }
