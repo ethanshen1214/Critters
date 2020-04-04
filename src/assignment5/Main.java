@@ -150,10 +150,35 @@ public class Main extends Application{
             }
         });
 
+/********************************************************************************/
+
+        Button displayWorldButton = new Button();                    //button
+        displayWorldButton.setText("Display World");
+        grid.add(displayWorldButton, 0, 10);
+
+        displayWorldButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                //Critter.displayWorld(world);
+            }
+        });
 
 
-        Scene scene = new Scene(grid, 500, 700);
+        Scene scene = new Scene(grid, 500, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+
+/************************************************************************************** */
+/************************************************************************************** */
+/************************************************************************************** */
+
+        Stage secondStage = new Stage();
+        GridPane world = new GridPane();
+
+
+        Scene scene2 = new Scene(world, 500, 200);
+        secondStage.show();
     }
 }
