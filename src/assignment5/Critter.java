@@ -117,7 +117,11 @@ public abstract class Critter {
     private int y_coord;
 
     private static List<Critter> population = new ArrayList<Critter>();
-    private static List<Critter> babies = new ArrayList<Critter>();
+	private static List<Critter> babies = new ArrayList<Critter>();
+	
+	public static List<Critter> getPop(){			//for testing
+		return population;
+	}
 
     /* Gets the package name.  This assumes that Critter and its
      * subclasses are all in the same package. */
@@ -149,9 +153,9 @@ public abstract class Critter {
     public static void createCritter(String critter_class_name)
             throws InvalidCritterException {
         // TODO: Complete this method
-        if(critter_class_name.length() < 12) {
-    		critter_class_name = myPackage + "." + critter_class_name;
-    	}
+        // if(critter_class_name.length() < 12) {
+    	// 	critter_class_name = myPackage + "." + critter_class_name;
+    	// }
     	//System.out.println(critter_class_name);
     	Object mycritter = null;
     	try
@@ -177,47 +181,47 @@ public abstract class Critter {
     	me.y_coord = Critter.getRandomInt(Params.WORLD_HEIGHT);
     	me.energy = Params.START_ENERGY;
     	
-    	if(critter_class_name.equals("assignment4.Clover"))
+    	if(critter_class_name.equals("assignment5.Clover"))
     	{
     		Clover clover = (Clover) me;
     		population.add(clover);
     	}
-    	// else if(critter_class_name.equals("assignment4.MyCritter1"))
-    	// {
-    	// 	MyCritter1 c = (MyCritter1) me;
-       	// 	population.add(c);
-    	// }
-    	// else if(critter_class_name.equals("assignment4.MyCritter2"))
-    	// {
-    	// 	MyCritter2 c = (MyCritter2) me;
-    	// 	population.add(c);
-    	// }
-    	// else if(critter_class_name.equals("assignment4.MyCritter3"))
-    	// {
-    	// 	MyCritter3 c = (MyCritter3) me;
-    	// 	population.add(c);
-    	// }
-    	// else if(critter_class_name.equals("assignment4.MyCritter4"))
-    	// {
-    	// 	MyCritter4 c = (MyCritter4) me;
-    	// 	population.add(c);
-    	// }
-       	// else if(critter_class_name.equals("assignment4.MyCritter5"))
-    	// {
-    	// 	MyCritter5 c = (MyCritter5) me;
-    	// 	population.add(c);
-    	// }
-    	// else if(critter_class_name.equals("assignment4.MyCritter6"))
-    	// {
-    	// 	MyCritter6 c = (MyCritter6) me;
-    	// 	population.add(c);
-    	// }
-    	// else if(critter_class_name.equals("assignment4.MyCritter7"))
-    	// {
-    	// 	MyCritter7 c =  (MyCritter7) me;
-    	// 	population.add(c);
-    	// }
-    	else if(critter_class_name.equals("assignment4.Goblin"))
+    	else if(critter_class_name.equals("assignment5.MyCritter1"))
+    	{
+    		MyCritter1 c = (MyCritter1) me;
+       		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment5.MyCritter2"))
+    	{
+    		MyCritter2 c = (MyCritter2) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment5.MyCritter3"))
+    	{
+    		MyCritter3 c = (MyCritter3) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment5.MyCritter4"))
+    	{
+    		MyCritter4 c = (MyCritter4) me;
+    		population.add(c);
+    	}
+       	else if(critter_class_name.equals("assignment5.MyCritter5"))
+    	{
+    		MyCritter5 c = (MyCritter5) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment5.MyCritter6"))
+    	{
+    		MyCritter6 c = (MyCritter6) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment5.MyCritter7"))
+    	{
+    		MyCritter7 c =  (MyCritter7) me;
+    		population.add(c);
+    	}
+    	else if(critter_class_name.equals("assignment5.Goblin"))
     	{
     		Goblin c = (Goblin) me;
     		population.add(c);

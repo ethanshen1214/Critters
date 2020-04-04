@@ -16,6 +16,8 @@ import javafx.scene.control.*;
 
 public class Main extends Application{
 
+
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -48,10 +50,13 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
+                
                 String newSeed = "Seed set to ";
                 newSeed += setSeedField.getText();
                 newSeedLabel.setText(newSeed);
                 //actually set the seed
+                long seed = Long.parseLong(setSeedField.getText());
+                Critter.setSeed(seed);
             }
         });
 /********************************************************************************/
@@ -98,7 +103,20 @@ public class Main extends Application{
                 addCritters += selectCritterType.getValue();
                 addCritters += " added";
                 addCritterLabel.setText(addCritters);
-                //actually add the critter
+                //actually add the critters
+                String critter = selectCritterType.getValue().toString();
+                int numCritters = Integer.parseInt(numCrittersField.getText());
+                for(int i = 0; i < numCritters; i++)
+                {
+                    try{
+                        Critter.createCritter(critter);
+                    }
+                    catch(InvalidCritterException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                //System.out.println(Critter.getPop());
             }
         });
 /********************************************************************************/
@@ -124,6 +142,11 @@ public class Main extends Application{
                 numSteps += " time steps completed. ";
                 numStepsLabel.setText(numSteps);
                 //actually do a time step
+                int steps = Integer.parseInt(numStepsField.getText());
+                for(int i = 0; i < steps; i++)
+                {
+                    Critter.worldTimeStep();
+                }
             }
         });
 
