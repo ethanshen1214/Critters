@@ -62,7 +62,7 @@ public class Main extends Application{
 
         Button setSeedButton = new Button();                    //button
         setSeedButton.setText("Set Seed");
-        grid.add(setSeedButton, 4, 1);
+        grid.add(setSeedButton, 2, 1);
 
         setSeedButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -108,7 +108,7 @@ public class Main extends Application{
 
         Button addCrittersButton = new Button();                    //button
         addCrittersButton.setText("Add Critters");
-        grid.add(addCrittersButton, 4, 5);
+        grid.add(addCrittersButton, 2, 5);
 
         Label addCritterLabel = new Label();    //output label
         grid.add(addCritterLabel, 1,6);
@@ -158,7 +158,7 @@ public class Main extends Application{
 
         Button numStepsButton = new Button();                    //button
         numStepsButton.setText("Time Step");
-        grid.add(numStepsButton, 4, 7);
+        grid.add(numStepsButton, 2, 7);
 
         numStepsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -193,26 +193,6 @@ public class Main extends Application{
                 Critter.displayWorld(world);
             }
         });
-/**********************************************************************************************************/
-/**Run animation */                                                                      //NOT DONE
-        Button runButton = new Button();                    //button
-        runButton.setText("Run");
-        grid.add(runButton, 0, 10);
-
-        Slider slider = new Slider(0, 10, 0);
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-        slider.setMajorTickUnit(1f);
-        slider.setSnapToTicks(true);
-        grid.add(slider, 1, 10);
-
-        runButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event)
-            {
-                int speed = (int)slider.getValue();
-            }
-        });
 
 /**********************************************************************************************************/
 /**Quit button */
@@ -245,6 +225,50 @@ public class Main extends Application{
                 //call Critter.displayWorld(); with a pane object
                 clearWorld(world);
                 Critter.displayWorld(world);
+            }
+        });
+
+/**********************************************************************************************************/
+/**Run animation */                                                                      //NOT DONE
+        Button runButton = new Button();                    //button
+        runButton.setText("Run");
+        grid.add(runButton, 0, 10);
+
+        Button stopButton = new Button();
+        stopButton.setText("Stop");
+        grid.add(stopButton, 1, 10);
+
+        Slider slider = new Slider(0, 10, 0);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.setMajorTickUnit(1f);
+        slider.setSnapToTicks(true);
+        grid.add(slider, 2, 10);
+
+        runButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                runButton.setDisable(true);
+                setSeedButton.setDisable(true);
+                addCrittersButton.setDisable(true);
+                numStepsButton.setDisable(true);
+                quitButton.setDisable(true);
+                displayWorldButton.setDisable(true);                
+                int speed = (int)slider.getValue();
+            }
+        });
+
+        stopButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                runButton.setDisable(false);
+                setSeedButton.setDisable(false);
+                addCrittersButton.setDisable(false);
+                numStepsButton.setDisable(false);
+                quitButton.setDisable(false);
+                displayWorldButton.setDisable(false);   
             }
         });
 
