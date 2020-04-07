@@ -194,7 +194,7 @@ public class Main extends Application{
             }
         });
 /**********************************************************************************************************/
-/**Run animation */
+/**Run animation */                                                                      //NOT DONE
         Button runButton = new Button();                    //button
         runButton.setText("Run");
         grid.add(runButton, 0, 10);
@@ -249,7 +249,7 @@ public class Main extends Application{
         });
 
 /**********************************************************************************************************/
-/**runstats */
+/**runstats */                                                  //NOT DONE
 
 
 
@@ -266,7 +266,7 @@ public class Main extends Application{
         secondStage.setScene(scene2);
         secondStage.show();
 
-        Scene scene3 = new Scene(runStats, 550, 400);
+        Scene scene3 = new Scene(runStats, 550, 300);
         thirdStage.setScene(scene3);
         thirdStage.show();
 

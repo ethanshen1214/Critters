@@ -115,7 +115,7 @@ public abstract class Critter {
 		return null;
 	}
 
-	public static void displayWorld(Object pane) {
+	public static void displayWorld(Object pane) {				//STILL NEED TO FINISH STAR AND ABILITY TO RESIZE
 		// TODO Implement this method
 		GridPane world = (GridPane)pane;
 
