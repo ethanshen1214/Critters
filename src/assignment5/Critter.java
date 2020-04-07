@@ -77,25 +77,32 @@ public abstract class Critter {
 		if (direction == 0) // right
 		{
 
-		} else if (direction == 1) // up right
+		} 
+		else if (direction == 1) // up right
 		{
 
-		} else if (direction == 2) // up
+		} 
+		else if (direction == 2) // up
 		{
 
-		} else if (direction == 3) // up left
+		} 
+		else if (direction == 3) // up left
 		{
 
-		} else if (direction == 4) // left
+		} 
+		else if (direction == 4) // left
 		{
 
-		} else if (direction == 5) // down left
+		} 
+		else if (direction == 5) // down left
 		{
 
-		} else if (direction == 6) // down
+		} 
+		else if (direction == 6) // down
 		{
 
-		} else if (direction == 7) // down right
+		} 
+		else if (direction == 7) // down right
 		{
 
 		}

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +19,7 @@ import javafx.scene.control.*;
 public class Main extends Application{
 
 
-
+    private static int numTimeSteps = 0;
     public static void main(String[] args) {
         launch(args);
     }
@@ -78,18 +79,20 @@ public class Main extends Application{
         Label critterType = new Label("Critter Name (e.g. Clover): ");         //instruction label
         grid.add(critterType, 0, 4);
 
-        final ComboBox selectCritterType = new ComboBox();
-        selectCritterType.getItems().addAll(
-            "assignment5.MyCritter1",
-            "assignment5.MyCritter2",
-            "assignment5.MyCritter3",
-            "assignment5.MyCritter4",
-            "assignment5.MyCritter5",
-            "assignment5.MyCritter6",
-            "assignment5.MyCritter7",
-            "assignment5.Clover",
-            "assignment5.Goblin"
-        );
+        // final ComboBox selectCritterType = new ComboBox();
+        // selectCritterType.getItems().addAll(
+        //     "assignment5.MyCritter1",
+        //     "assignment5.MyCritter2",
+        //     "assignment5.MyCritter3",
+        //     "assignment5.MyCritter4",
+        //     "assignment5.MyCritter5",
+        //     "assignment5.MyCritter6",
+        //     "assignment5.MyCritter7",
+        //     "assignment5.Clover",
+        //     "assignment5.Goblin"
+        // );
+        // grid.add(selectCritterType, 1, 4);
+        TextField selectCritterType = new TextField();
         grid.add(selectCritterType, 1, 4);
 
 
@@ -114,11 +117,12 @@ public class Main extends Application{
                 String addCritters = "";
                 addCritters += numCrittersField.getText();
                 addCritters += " ";
-                addCritters += selectCritterType.getValue();
+                addCritters += selectCritterType.getText();
                 addCritters += " added";
                 addCritterLabel.setText(addCritters);
                 //actually add the critters
-                String critter = selectCritterType.getValue().toString();
+                String critter = "assignment5.";
+                critter += selectCritterType.getText();
                 int numCritters = Integer.parseInt(numCrittersField.getText());
                 for(int i = 0; i < numCritters; i++)
                 {
@@ -140,6 +144,8 @@ public class Main extends Application{
         grid.add(numSteps, 0, 7);
         Label numStepsLabel = new Label();   //output label
         grid.add(numStepsLabel, 1,8);
+        Label totalStepsLabel = new Label();   //output label
+        grid.add(totalStepsLabel, 1,9);
 
         TextField numStepsField = new TextField();               //input text
         grid.add(numStepsField, 1,7);
@@ -153,30 +159,52 @@ public class Main extends Application{
             public void handle(ActionEvent event)
             {
                 String numSteps = "";
-                numSteps += numStepsField.getText();
-                numSteps += " time steps completed. ";
-                numStepsLabel.setText(numSteps);
-                //actually do a time step
                 int steps;
                 if(numStepsField.getText().equals(""))
+                {
                     steps = 1;
+                    numSteps += "1";
+                    numSteps += " time step completed.";
+                    numTimeSteps += 1;
+                } 
                 else
+                {
                     steps = Integer.parseInt(numStepsField.getText());
+                    numSteps += numStepsField.getText();
+                    numSteps += " time steps completed. ";
+                    numTimeSteps += Integer.parseInt(numStepsField.getText());
+                }
+                numStepsLabel.setText(numSteps);
+                totalStepsLabel.setText("Time: " + Integer.toString(numTimeSteps));
+
+                //actually do a time step    
                 for(int i = 0; i < steps; i++)
                 {
                     Critter.worldTimeStep();
                 }
 
-                // for(int a = 0; a < world.getMaxWidth(); a ++)//clears the grid
-                // {
-                //     for(int b = 0; b < world.getMaxHeight(); b++)
-                //     {
-                //         Rectangle rectangle = new Rectangle(30,30, Color.WHITE);
-                //         world.add(rectangle, a,b);
-                //     }
-                // }
                 clearWorld(world);
                 Critter.displayWorld(world);
+            }
+        });
+/**********************************************************************************************************/
+/**Run animation */
+        Button runButton = new Button();                    //button
+        runButton.setText("Run");
+        grid.add(runButton, 0, 10);
+
+        Slider slider = new Slider(0, 10, 0);
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.setMajorTickUnit(1f);
+        slider.setSnapToTicks(true);
+        grid.add(slider, 1, 10);
+
+        runButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event)
+            {
+                int speed = (int)slider.getValue();
             }
         });
 
@@ -185,7 +213,7 @@ public class Main extends Application{
 
         Button quitButton = new Button();                    //button
         quitButton.setText("Quit");
-        grid.add(quitButton, 1, 10);
+        grid.add(quitButton, 1, 12);
 
         quitButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -202,18 +230,21 @@ public class Main extends Application{
 
         Button displayWorldButton = new Button();                    //button
         displayWorldButton.setText("Display World");
-        grid.add(displayWorldButton, 0, 10);
+        grid.add(displayWorldButton, 0, 12);
 
         displayWorldButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
             {
-                //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
                 //call Critter.displayWorld(); with a pane object
                 clearWorld(world);
                 Critter.displayWorld(world);
             }
         });
+
+/************************************************************************************** */
+/************************************************************************************** */
+/************************************************************************************** */
 
 
         Scene scene = new Scene(grid, 550, 400);
@@ -224,20 +255,11 @@ public class Main extends Application{
         secondStage.setScene(scene2);
         secondStage.show();
 
-
-/************************************************************************************** */
-/************************************************************************************** */
-/************************************************************************************** */
-
-
-
-
-
-
     }
 
     public void clearWorld(GridPane world)
     {
+        
         for(int i = 0; i < world.getMaxWidth(); i ++)
         {
             for(int j = 0; j < world.getMaxHeight(); j++)
@@ -247,5 +269,6 @@ public class Main extends Application{
             }
         }
         world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
+       
     }
 }
