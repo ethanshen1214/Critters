@@ -45,6 +45,10 @@ public class Main extends Application{
         //world.setGridLinesVisible(true);
         //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
 
+        Stage thirdStage = new Stage();
+        GridPane runStats = new GridPane();
+        
+
 /****************************************************************************************************************/ 
 /**Set Seed */       
 
@@ -114,7 +118,8 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
-                String addCritters = "";
+
+                                String addCritters = "";
                 addCritters += numCrittersField.getText();
                 addCritters += " ";
                 addCritters += selectCritterType.getText();
@@ -131,9 +136,10 @@ public class Main extends Application{
                     }
                     catch(InvalidCritterException e)
                     {
-                        e.printStackTrace();
+                        addCritterLabel.setText(selectCritterType.getText() + " is not a valid Critter type");
                     }
                 }
+
                 //System.out.println(Critter.getPop());
             }
         });
@@ -242,6 +248,11 @@ public class Main extends Application{
             }
         });
 
+/**********************************************************************************************************/
+/**runstats */
+
+
+
 /************************************************************************************** */
 /************************************************************************************** */
 /************************************************************************************** */
@@ -254,6 +265,10 @@ public class Main extends Application{
         Scene scene2 = new Scene(world, 600, 600);
         secondStage.setScene(scene2);
         secondStage.show();
+
+        Scene scene3 = new Scene(runStats, 550, 400);
+        thirdStage.setScene(scene3);
+        thirdStage.show();
 
     }
 

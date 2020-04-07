@@ -40,10 +40,21 @@ import java.util.List;
 	    public void test(List<Critter> l) {
 		}
 		
+
 		@Override
 		public CritterShape viewShape() {
 			// TODO Auto-generated method stub
-			return null;
+			return CritterShape.SQUARE;
+		}
+	
+		@Override
+		public javafx.scene.paint.Color viewOutlineColor() {
+			return javafx.scene.paint.Color.RED;
+		}
+		
+		@Override
+		public javafx.scene.paint.Color viewFillColor() {
+			return javafx.scene.paint.Color.RED;
 		}
 }
 

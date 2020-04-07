@@ -22,6 +22,7 @@ import javax.lang.model.util.ElementScanner6;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.TriangleMesh;
 
@@ -123,25 +124,53 @@ public abstract class Critter {
 
 			if(c.viewShape() == CritterShape.CIRCLE)
 			{
-				Circle circle = new Circle(5, Color.RED);
+				Circle circle = new Circle(5, c.viewFillColor());
+				circle.setStroke(c.viewOutlineColor());
+				//resize by calling circle.setRadius(double);
 				world.add(circle, c.x_coord,c.y_coord);
 			}
 			else if(c.viewShape() == CritterShape.SQUARE)
 			{
-				Rectangle rectangle = new Rectangle(10,10, Color.LIGHTGRAY);
+				Rectangle rectangle = new Rectangle(10,10, c.viewFillColor());
+				rectangle.setStroke(c.viewOutlineColor());
+				//rectangle.setWidth(double);
+				//rectangle.setHeight(double);
 				world.add(rectangle, c.x_coord, c.y_coord);
 			}
 			else if(c.viewShape() == CritterShape.TRIANGLE)
 			{
-				
+				Polygon triangle = new Polygon();
+				triangle.getPoints().addAll(new Double[]{
+					10.0, 0.0,
+					0.0, 20.0,
+					20.0, 20.0
+				});
+				triangle.setFill(c.viewFillColor());
+				triangle.setStroke(c.viewOutlineColor());
+				world.add(triangle, c.x_coord, c.y_coord);
 			}
 			else if(c.viewShape() == CritterShape.DIAMOND)
 			{
-				
+				Polygon diamond = new Polygon();
+				diamond.getPoints().addAll(new Double[]{
+					10.0, 0.0,
+					5.0, 10.0,
+					10.0, 20.0,
+					15.0, 10.0
+				});
+				diamond.setFill(c.viewFillColor());
+				diamond.setStroke(c.viewOutlineColor());
+				world.add(diamond, c.x_coord, c.y_coord);
 			}
 			else if(c.viewShape() == CritterShape.STAR)
 			{
-				
+				Polygon star = new Polygon();
+				star.getPoints().addAll(new Double[] {
+
+				});
+				star.setFill(c.viewFillColor());
+				star.setStroke(c.viewOutlineColor());
+				world.add(star, c.x_coord, c.y_coord);
 			}
 		}
 		//world.setGridLinesVisible(true);
@@ -206,14 +235,14 @@ public abstract class Critter {
     	}
     	catch(ClassNotFoundException e)
     	{
-    		e.printStackTrace();
+    		//e.printStackTrace();
     		throw new InvalidCritterException(critter_class_name);
     	} 
     	catch (InstantiationException e) {
-			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
 		} 
     	catch (IllegalAccessException e) {
-			e.printStackTrace();
+			throw new InvalidCritterException(critter_class_name);
 		}
     	Critter me = (Critter) mycritter;		// Cast to Critter
     	me.x_coord = Critter.getRandomInt(Params.WORLD_WIDTH);

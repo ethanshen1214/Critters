@@ -42,6 +42,16 @@ public class MyCritter3 extends TestCritter{
     @Override
     public CritterShape viewShape() {
         // TODO Auto-generated method stub
-        return null;
+        return CritterShape.DIAMOND;
     }
+
+    @Override
+    public javafx.scene.paint.Color viewOutlineColor() {
+		return javafx.scene.paint.Color.BLACK;
+    }
+    
+    @Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return javafx.scene.paint.Color.BLACK;
+	}
 }

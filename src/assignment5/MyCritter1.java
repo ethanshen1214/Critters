@@ -30,7 +30,17 @@ public class MyCritter1 extends TestCritter {
     @Override
     public CritterShape viewShape() {
         // TODO Auto-generated method stub
-        return CritterShape.CIRCLE;
+        return CritterShape.SQUARE;
     }
+
+    @Override
+    public javafx.scene.paint.Color viewOutlineColor() {
+		return javafx.scene.paint.Color.GREEN;
+    }
+    
+    @Override
+	public javafx.scene.paint.Color viewFillColor() {
+		return javafx.scene.paint.Color.GREEN;
+	}
 
 }
