@@ -1,5 +1,7 @@
 package assignment5;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
@@ -243,7 +245,7 @@ public class Main extends Application{
         stopButton.setText("Stop");
         grid.add(stopButton, 1, 10);
 
-        Slider slider = new Slider(0, 10, 0);
+        Slider slider = new Slider(1, 10, 0);
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(1f);
@@ -266,19 +268,38 @@ public class Main extends Application{
         });
 
         AnimationTimer animationRunner = new AnimationTimer(){
-        
+            private long lastUpdate = 0;
             @Override
             public void handle(long now) {
                 // TODO Auto-generated method stub
-                for(int i = 0; i < speed.get(); i++)
+                if(now - lastUpdate >= 500_000_000)
                 {
-                    Critter.worldTimeStep();
+                    for(int i = 0; i < speed.get(); i++)
+                    {
+                        Critter.worldTimeStep();
+                    }
+                    clearWorld(world);
+                    Critter.displayWorld(world);
+                    lastUpdate = now;
                 }
-                clearWorld(world);
-                Critter.displayWorld(world);
             }
         };
-        
+
+        // TimerTask animationRunner = new TimerTask(){
+
+		// 	@Override
+		// 	public void run() {
+		// 		// TODO Auto-generated method stub
+		// 		for(int i = 0; i < speed.get(); i++)
+        //         {
+        //             Critter.worldTimeStep();
+        //         }
+        //         clearWorld(world);
+        //         Critter.displayWorld(world);
+		// 	}
+            
+        // };
+        // Timer timer = new Timer();
 
         runButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -289,7 +310,8 @@ public class Main extends Application{
                 addCrittersButton.setDisable(true);
                 numStepsButton.setDisable(true);
                 quitButton.setDisable(true);
-                displayWorldButton.setDisable(true);                
+                displayWorldButton.setDisable(true);               
+                //timer.schedule(animationRunner, 0, 10000);
                 animationRunner.start();
             }
         });
@@ -304,7 +326,8 @@ public class Main extends Application{
                 numStepsButton.setDisable(false);
                 quitButton.setDisable(false);
                 displayWorldButton.setDisable(false);  
-                animationRunner.stop(); 
+                //timer.cancel();
+                animationRunner.stop();
             }
         });
 
