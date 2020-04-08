@@ -1,3 +1,15 @@
+/* CRITTERS Critter.java
+ * EE422C Project 5 submission by
+ * Replace <...> with your actual data.
+ * Ethan Shen
+ * es38348
+ * 16295
+ * Osama Iqbal
+ * oi723
+ * 16295
+ * Slip days used: <0>
+ * Spring 2020
+ */
 package assignment5;
 
 import java.util.Timer;
@@ -90,19 +102,7 @@ public class Main extends Application{
         Label critterType = new Label("Critter Name (e.g. Clover): ");         //instruction label
         grid.add(critterType, 0, 4);
 
-        // final ComboBox selectCritterType = new ComboBox();
-        // selectCritterType.getItems().addAll(
-        //     "assignment5.MyCritter1",
-        //     "assignment5.MyCritter2",
-        //     "assignment5.MyCritter3",
-        //     "assignment5.MyCritter4",
-        //     "assignment5.MyCritter5",
-        //     "assignment5.MyCritter6",
-        //     "assignment5.MyCritter7",
-        //     "assignment5.Clover",
-        //     "assignment5.Goblin"
-        // );
-        // grid.add(selectCritterType, 1, 4);
+
         TextField selectCritterType = new TextField();
         grid.add(selectCritterType, 1, 4);
 
@@ -146,8 +146,6 @@ public class Main extends Application{
                         addCritterLabel.setText(selectCritterType.getText() + " is not a valid Critter type");
                     }
                 }
-
-                //System.out.println(Critter.getPop());
             }
         });
 /*************************************************************************************************************/
@@ -252,7 +250,7 @@ public class Main extends Application{
         slider.setSnapToTicks(true);
         grid.add(slider, 2, 10);
 
-        //final int speed = 1;
+
         AtomicInteger speed = new AtomicInteger(1);
 
         slider.valueProperty().addListener(new ChangeListener<Number>() {
@@ -285,22 +283,6 @@ public class Main extends Application{
             }
         };
 
-        // TimerTask animationRunner = new TimerTask(){
-
-		// 	@Override
-		// 	public void run() {
-		// 		// TODO Auto-generated method stub
-		// 		for(int i = 0; i < speed.get(); i++)
-        //         {
-        //             Critter.worldTimeStep();
-        //         }
-        //         clearWorld(world);
-        //         Critter.displayWorld(world);
-		// 	}
-            
-        // };
-        // Timer timer = new Timer();
-
         runButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -311,7 +293,7 @@ public class Main extends Application{
                 numStepsButton.setDisable(true);
                 quitButton.setDisable(true);
                 displayWorldButton.setDisable(true);               
-                //timer.schedule(animationRunner, 0, 10000);
+                //start the timer
                 animationRunner.start();
             }
         });
@@ -326,7 +308,7 @@ public class Main extends Application{
                 numStepsButton.setDisable(false);
                 quitButton.setDisable(false);
                 displayWorldButton.setDisable(false);  
-                //timer.cancel();
+                //stop the timer
                 animationRunner.stop();
             }
         });
