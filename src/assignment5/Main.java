@@ -1,6 +1,11 @@
 package assignment5;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -245,6 +250,36 @@ public class Main extends Application{
         slider.setSnapToTicks(true);
         grid.add(slider, 2, 10);
 
+        //final int speed = 1;
+        AtomicInteger speed = new AtomicInteger(1);
+
+        slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(
+               ObservableValue<? extends Number> observableValue, 
+               Number oldValue, 
+               Number newValue) { 
+                    speed.set(newValue.intValue());
+                    //System.out.println(speed.get());
+              }
+        });
+
+        AnimationTimer animationRunner = new AnimationTimer(){
+        
+            @Override
+            public void handle(long now) {
+                // TODO Auto-generated method stub
+                for(int i = 0; i < speed.get(); i++)
+                {
+                    Critter.worldTimeStep();
+                }
+                clearWorld(world);
+                Critter.displayWorld(world);
+            }
+        };
+        
+
         runButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -255,7 +290,7 @@ public class Main extends Application{
                 numStepsButton.setDisable(true);
                 quitButton.setDisable(true);
                 displayWorldButton.setDisable(true);                
-                int speed = (int)slider.getValue();
+                animationRunner.start();
             }
         });
 
@@ -268,7 +303,8 @@ public class Main extends Application{
                 addCrittersButton.setDisable(false);
                 numStepsButton.setDisable(false);
                 quitButton.setDisable(false);
-                displayWorldButton.setDisable(false);   
+                displayWorldButton.setDisable(false);  
+                animationRunner.stop(); 
             }
         });
 
@@ -310,4 +346,6 @@ public class Main extends Application{
         world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
        
     }
+
+
 }
