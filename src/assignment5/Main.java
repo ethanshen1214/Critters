@@ -316,6 +316,8 @@ public class Main extends Application{
 /**********************************************************************************************************/
 /**runstats */                                                  //NOT DONE
 
+/////use the third gridpane called runStats. it should show up on the third blank window
+
 
 
 /************************************************************************************** */
