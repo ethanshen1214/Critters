@@ -19,6 +19,9 @@ import java.util.Random;
 
 import javax.lang.model.util.ElementScanner6;
 
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -117,6 +120,12 @@ public abstract class Critter {
 
 	public static void displayWorld(Object pane) {				//STILL NEED TO FINISH STAR AND ABILITY TO RESIZE
 		// TODO Implement this method
+
+		double cellHeight = (800/Params.WORLD_HEIGHT);
+		double cellWidth = (800/Params.WORLD_WIDTH);
+		double height = (800/ Params.WORLD_HEIGHT)/1.3;		//for resizing
+		double width = (800/ Params.WORLD_WIDTH)/1.3;
+		
 		GridPane world = (GridPane)pane;
 
 		for(Critter c : population)
@@ -124,43 +133,64 @@ public abstract class Critter {
 
 			if(c.viewShape() == CritterShape.CIRCLE)
 			{
-				Circle circle = new Circle(5, c.viewFillColor());
+				//Circle circle = new Circle(5, c.viewFillColor());
+				Circle circle = new Circle(width/2, c.viewFillColor());
 				circle.setStroke(c.viewOutlineColor());
 				//resize by calling circle.setRadius(double);
 				world.add(circle, c.x_coord,c.y_coord);
+				world.setHalignment(circle, HPos.CENTER);
+				world.setValignment(circle, VPos.CENTER);
 			}
 			else if(c.viewShape() == CritterShape.SQUARE)
 			{
-				Rectangle rectangle = new Rectangle(10,10, c.viewFillColor());
+				//Rectangle rectangle = new Rectangle(10,10, c.viewFillColor());
+				Rectangle rectangle = new Rectangle(width,height, c.viewFillColor());
 				rectangle.setStroke(c.viewOutlineColor());
 				//rectangle.setWidth(double);
 				//rectangle.setHeight(double);
 				world.add(rectangle, c.x_coord, c.y_coord);
+				world.setHalignment(rectangle, HPos.CENTER);
+				world.setValignment(rectangle, VPos.CENTER);
 			}
 			else if(c.viewShape() == CritterShape.TRIANGLE)
 			{
 				Polygon triangle = new Polygon();
+				// triangle.getPoints().addAll(new Double[]{
+				// 	10.0, 0.0,
+				// 	0.0, 20.0,
+				// 	20.0, 20.0
+				// });
 				triangle.getPoints().addAll(new Double[]{
-					10.0, 0.0,
-					0.0, 20.0,
-					20.0, 20.0
+					cellWidth/2, cellHeight-height,
+					cellWidth-width, height,
+					width, height
 				});
 				triangle.setFill(c.viewFillColor());
 				triangle.setStroke(c.viewOutlineColor());
 				world.add(triangle, c.x_coord, c.y_coord);
+				world.setHalignment(triangle, HPos.CENTER);
+				world.setValignment(triangle, VPos.CENTER);
 			}
 			else if(c.viewShape() == CritterShape.DIAMOND)
 			{
 				Polygon diamond = new Polygon();
+				// diamond.getPoints().addAll(new Double[]{
+				// 	10.0, 0.0,
+				// 	5.0, 10.0,
+				// 	10.0, 20.0,
+				// 	15.0, 10.0
+				// });
 				diamond.getPoints().addAll(new Double[]{
-					10.0, 0.0,
-					5.0, 10.0,
-					10.0, 20.0,
-					15.0, 10.0
+					cellWidth/2, cellHeight-height,
+					cellWidth-width, cellHeight/2,
+					cellWidth/2, height,
+					width, cellHeight/2
 				});
 				diamond.setFill(c.viewFillColor());
 				diamond.setStroke(c.viewOutlineColor());
 				world.add(diamond, c.x_coord, c.y_coord);
+				world.setHalignment(diamond, HPos.CENTER);
+				world.setValignment(diamond, VPos.CENTER);
 			}
 			else if(c.viewShape() == CritterShape.STAR)
 			{
@@ -171,6 +201,8 @@ public abstract class Critter {
 				star.setFill(c.viewFillColor());
 				star.setStroke(c.viewOutlineColor());
 				world.add(star, c.x_coord, c.y_coord);
+				world.setHalignment(star, HPos.CENTER);
+				world.setValignment(star, VPos.CENTER);
 			}
 		}
 		//world.setGridLinesVisible(true);

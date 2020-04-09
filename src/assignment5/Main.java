@@ -329,7 +329,7 @@ public class Main extends Application{
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Scene scene2 = new Scene(world, 600, 600);
+        Scene scene2 = new Scene(world, 800, 800);
         secondStage.setScene(scene2);
         secondStage.show();
 
@@ -341,12 +341,14 @@ public class Main extends Application{
 
     public void clearWorld(GridPane world)
     {
+        double height = (800/ Params.WORLD_HEIGHT);
+		double width = (800/ Params.WORLD_WIDTH);
         
         for(int i = 0; i < world.getMaxWidth(); i ++)
         {
             for(int j = 0; j < world.getMaxHeight(); j++)
             {
-                Rectangle rectangle = new Rectangle(30,30, Color.WHITE);
+                Rectangle rectangle = new Rectangle(width,height, Color.WHITE);
 				world.add(rectangle, i,j);
             }
         }
