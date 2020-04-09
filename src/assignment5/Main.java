@@ -349,10 +349,11 @@ public class Main extends Application{
             for(int j = 0; j < world.getMaxHeight(); j++)
             {
                 Rectangle rectangle = new Rectangle(width,height, Color.WHITE);
+                rectangle.setStroke(javafx.scene.paint.Color.BLACK);
 				world.add(rectangle, i,j);
             }
         }
-        world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
+        //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
        
     }
 
