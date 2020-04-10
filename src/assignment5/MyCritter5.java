@@ -43,7 +43,7 @@ import java.util.List;
 		@Override
 		public CritterShape viewShape() {
 			// TODO Auto-generated method stub
-			return CritterShape.SQUARE;
+			return CritterShape.TRIANGLE;
 		}
 	
 		@Override

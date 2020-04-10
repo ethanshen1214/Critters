@@ -196,7 +196,11 @@ public abstract class Critter {
 			{
 				Polygon star = new Polygon();
 				star.getPoints().addAll(new Double[] {
-
+					cellWidth/2, cellHeight-height,
+					cellWidth-width+(width/7), height,
+					width, cellHeight-height+(height/4),
+					cellWidth-width, cellHeight-height+(height/4),
+					width-(width/7), height
 				});
 				star.setFill(c.viewFillColor());
 				star.setStroke(c.viewOutlineColor());
