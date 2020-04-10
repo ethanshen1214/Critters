@@ -118,7 +118,7 @@ public abstract class Critter {
 		return null;
 	}
 
-	public static void displayWorld(Object pane) {				//STILL NEED TO FINISH STAR AND ABILITY TO RESIZE
+	public static void displayWorld(Object pane) {
 		// TODO Implement this method
 
 		double cellHeight = (800/Params.WORLD_HEIGHT);
@@ -133,21 +133,16 @@ public abstract class Critter {
 
 			if(c.viewShape() == CritterShape.CIRCLE)
 			{
-				//Circle circle = new Circle(5, c.viewFillColor());
-				Circle circle = new Circle(width/2, c.viewFillColor());
+				Circle circle = new Circle((width/2)-(width/10), c.viewFillColor());
 				circle.setStroke(c.viewOutlineColor());
-				//resize by calling circle.setRadius(double);
 				world.add(circle, c.x_coord,c.y_coord);
 				world.setHalignment(circle, HPos.CENTER);
 				world.setValignment(circle, VPos.CENTER);
 			}
 			else if(c.viewShape() == CritterShape.SQUARE)
 			{
-				//Rectangle rectangle = new Rectangle(10,10, c.viewFillColor());
-				Rectangle rectangle = new Rectangle(width,height, c.viewFillColor());
+				Rectangle rectangle = new Rectangle(width-(width/6),height-(height/6), c.viewFillColor());
 				rectangle.setStroke(c.viewOutlineColor());
-				//rectangle.setWidth(double);
-				//rectangle.setHeight(double);
 				world.add(rectangle, c.x_coord, c.y_coord);
 				world.setHalignment(rectangle, HPos.CENTER);
 				world.setValignment(rectangle, VPos.CENTER);
@@ -209,7 +204,6 @@ public abstract class Critter {
 				world.setValignment(star, VPos.CENTER);
 			}
 		}
-		//world.setGridLinesVisible(true);
     }
 
 	/* END --- NEW FOR PROJECT 5

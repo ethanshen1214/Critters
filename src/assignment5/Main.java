@@ -58,11 +58,8 @@ public class Main extends Application{
 
         Stage secondStage = new Stage();                        //second stage for the critter grid
         GridPane world = new GridPane();
-        //world.setPrefSize(750, 750);
         world.setMaxSize(Params.WORLD_WIDTH, Params.WORLD_HEIGHT);
         clearWorld(world);
-        //world.setGridLinesVisible(true);
-        //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
 
         Stage thirdStage = new Stage();
         GridPane runStats = new GridPane();
@@ -87,13 +84,19 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
-                
-                String newSeed = "Seed set to ";
-                newSeed += setSeedField.getText();
-                newSeedLabel.setText(newSeed);
-                //actually set the seed
-                long seed = Long.parseLong(setSeedField.getText());
-                Critter.setSeed(seed);
+                try {
+                    String newSeed = "Seed set to ";
+                    newSeed += setSeedField.getText();
+                    newSeedLabel.setText(newSeed);
+                    //actually set the seed
+                    long seed = Long.parseLong(setSeedField.getText());
+                    Critter.setSeed(seed);
+                }
+                catch(NumberFormatException e)
+                {
+                    newSeedLabel.setText("Not a valid number input");
+                }
+
             }
         });
 /*******************************************************************************************************************/
@@ -108,7 +111,7 @@ public class Main extends Application{
 
 
 
-        Label numCritters = new Label("Number of Critters: ");  
+        Label numCritters = new Label("Number of Critters (default 1):");  
         grid.add(numCritters, 0, 5);
         TextField numCrittersField = new TextField();               //input text
         grid.add(numCrittersField, 1,5);
@@ -126,32 +129,49 @@ public class Main extends Application{
             public void handle(ActionEvent event)
             {
 
-                                String addCritters = "";
-                addCritters += numCrittersField.getText();
-                addCritters += " ";
-                addCritters += selectCritterType.getText();
-                addCritters += " added";
-                addCritterLabel.setText(addCritters);
-                //actually add the critters
-                String critter = "assignment5.";
-                critter += selectCritterType.getText();
-                int numCritters = Integer.parseInt(numCrittersField.getText());
-                for(int i = 0; i < numCritters; i++)
-                {
-                    try{
-                        Critter.createCritter(critter);
-                    }
-                    catch(InvalidCritterException e)
+                try{
+                    String addCritters = "";
+                    int numCritters = 0;
+                    if(numCrittersField.getText().equals(""))       //default add 1 critter
                     {
-                        addCritterLabel.setText(selectCritterType.getText() + " is not a valid Critter type");
+                        addCritters += "1";
+                        numCritters = 1;
+                    }
+                    else
+                    {
+                        addCritters += numCrittersField.getText();
+                        numCritters = Integer.parseInt(numCrittersField.getText());
+                    }
+                    addCritters += " ";
+                    addCritters += selectCritterType.getText();
+                    addCritters += " added";
+                    addCritterLabel.setText(addCritters);
+
+                    //actually add the critters
+                    String critter = "assignment5.";
+                    critter += selectCritterType.getText();
+                    for(int i = 0; i < numCritters; i++)
+                    {
+                        try{
+                            Critter.createCritter(critter);
+                        }
+                        catch(InvalidCritterException e)
+                        {
+                            addCritterLabel.setText(selectCritterType.getText() + " is not a valid Critter type");
+                        }
                     }
                 }
+                catch(NumberFormatException e)
+                {
+                    addCritterLabel.setText("Not a valid number input");
+                }
+ 
             }
         });
 /*************************************************************************************************************/
 /**Time Step */
 
-        Label numSteps = new Label("Number of Steps (default 1): ");         //instruction label
+        Label numSteps = new Label("Number of Steps (default 1):");         //instruction label
         grid.add(numSteps, 0, 7);
         Label numStepsLabel = new Label();   //output label
         grid.add(numStepsLabel, 1,8);
@@ -169,33 +189,40 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
-                String numSteps = "";
-                int steps;
-                if(numStepsField.getText().equals(""))
-                {
-                    steps = 1;
-                    numSteps += "1";
-                    numSteps += " time step completed.";
-                    numTimeSteps += 1;
-                } 
-                else
-                {
-                    steps = Integer.parseInt(numStepsField.getText());
-                    numSteps += numStepsField.getText();
-                    numSteps += " time steps completed. ";
-                    numTimeSteps += Integer.parseInt(numStepsField.getText());
-                }
-                numStepsLabel.setText(numSteps);
-                totalStepsLabel.setText("Time: " + Integer.toString(numTimeSteps));
+                try{
+                    String numSteps = "";
+                    int steps;
+                    if(numStepsField.getText().equals(""))      //default 1 time step
+                    {
+                        steps = 1;
+                        numSteps += "1";
+                        numSteps += " time step completed.";
+                        numTimeSteps += 1;
+                    } 
+                    else
+                    {
+                        steps = Integer.parseInt(numStepsField.getText());
+                        numSteps += numStepsField.getText();
+                        numSteps += " time steps completed. ";
+                        numTimeSteps += Integer.parseInt(numStepsField.getText());
+                    }
+                    numStepsLabel.setText(numSteps);
+                    totalStepsLabel.setText("Time: " + Integer.toString(numTimeSteps));
 
-                //actually do a time step    
-                for(int i = 0; i < steps; i++)
+                    //actually do a time step    
+                    for(int i = 0; i < steps; i++)
+                    {
+                        Critter.worldTimeStep();
+                    }
+
+                    clearWorld(world);
+                    Critter.displayWorld(world);        //automatically displays the world every time the button is pressed                    
+                }
+                catch(NumberFormatException e)
                 {
-                    Critter.worldTimeStep();
+                    numStepsLabel.setText("Not a valid number input");
                 }
 
-                clearWorld(world);
-                Critter.displayWorld(world);
             }
         });
 
@@ -228,22 +255,22 @@ public class Main extends Application{
             public void handle(ActionEvent event)
             {
                 //call Critter.displayWorld(); with a pane object
-                clearWorld(world);
+                clearWorld(world);          //clear world draws over everything with white squares
                 Critter.displayWorld(world);
             }
         });
 
 /**********************************************************************************************************/
-/**Run animation */                                                                      //NOT DONE
+/**Run animation */                                                                      
         Button runButton = new Button();                    //button
         runButton.setText("Run");
         grid.add(runButton, 0, 10);
 
-        Button stopButton = new Button();
+        Button stopButton = new Button();                   //button
         stopButton.setText("Stop");
         grid.add(stopButton, 1, 10);
 
-        Slider slider = new Slider(1, 10, 0);
+        Slider slider = new Slider(1, 10, 0);               //slider
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(1f);
@@ -251,7 +278,7 @@ public class Main extends Application{
         grid.add(slider, 2, 10);
 
 
-        AtomicInteger speed = new AtomicInteger(1);
+        AtomicInteger speed = new AtomicInteger(1);         //atomic interger can be accessed within the handlers
 
         slider.valueProperty().addListener(new ChangeListener<Number>() {
 
@@ -260,8 +287,7 @@ public class Main extends Application{
                ObservableValue<? extends Number> observableValue, 
                Number oldValue, 
                Number newValue) { 
-                    speed.set(newValue.intValue());
-                    //System.out.println(speed.get());
+                    speed.set(newValue.intValue());         //the slider changes the speed variable
               }
         });
 
@@ -270,9 +296,9 @@ public class Main extends Application{
             @Override
             public void handle(long now) {
                 // TODO Auto-generated method stub
-                if(now - lastUpdate >= 500_000_000)
+                if(now - lastUpdate >= 500_000_000)     //delay the animation timer
                 {
-                    for(int i = 0; i < speed.get(); i++)
+                    for(int i = 0; i < speed.get(); i++)    //the animation timer does "speed" time steps per cycle before calling display world
                     {
                         Critter.worldTimeStep();
                     }
@@ -287,7 +313,7 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
-                runButton.setDisable(true);
+                runButton.setDisable(true);         //lock the other buttons
                 setSeedButton.setDisable(true);
                 addCrittersButton.setDisable(true);
                 numStepsButton.setDisable(true);
@@ -302,14 +328,14 @@ public class Main extends Application{
             @Override
             public void handle(ActionEvent event)
             {
-                runButton.setDisable(false);
+                runButton.setDisable(false);            //re enable the buttons
                 setSeedButton.setDisable(false);
                 addCrittersButton.setDisable(false);
                 numStepsButton.setDisable(false);
                 quitButton.setDisable(false);
                 displayWorldButton.setDisable(false);  
-                //stop the timer
-                animationRunner.stop();
+                //stop the timer    
+                animationRunner.stop(); 
             }
         });
 
@@ -353,7 +379,6 @@ public class Main extends Application{
 				world.add(rectangle, i,j);
             }
         }
-        //world.setStyle("-fx-background-color: white; -fx-grid-lines-visible: true");
        
     }
 
